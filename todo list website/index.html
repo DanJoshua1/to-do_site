@@ -7,7 +7,6 @@
     <link rel="icon" href="assets/icon.png">
     <title>What to do?</title>
     <style>
-        /* Add this CSS to your existing styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -71,6 +70,7 @@
             flex-direction: row; /* Items stacked vertically */
             align-items: center; /* Align items horizontally in the center */
             text-align: center; /* Align text content horizontally in the center */
+            justify-content: space-between;
         }
 
         .task-actions button {
@@ -90,6 +90,11 @@
             width: 100px; /* Adjust the width as needed */
             margin-top: 5px; /* Optional: Add some spacing */
             text-align: center; /* Center the timestamp */
+        }
+
+        .end-timestamp,
+        .duration {
+            display: none; /* Hide the end timestamp and duration initially */
         }
 
         #printButton {
@@ -164,9 +169,14 @@
                 taskItem.classList.add("task-item");
                 taskItem.innerHTML = `
                     <span>${taskText}</span>
-                    <div class="timestamp-container"><span class="timestamp">${new Date().toLocaleString()}</span></div>
+                    <div class="timestamp-container">
+                        <span class="start-timestamp"> Start: ${new Date().toLocaleString()}</span>
+                        <span class="end-timestamp"></span>
+                        <span class="duration"></span>
+                    </div>
                     <div class="task-actions">
-                        <button class="completeBtn">Complete</button>
+                        <button class="completeBtn">Complete
+                        </button>
                         <button class="deleteBtn">Delete</button>
                     </div>
                 `;
@@ -175,6 +185,29 @@
                 const completeBtn = taskItem.querySelector(".completeBtn");
                 completeBtn.addEventListener("click", function () {
                     taskItem.classList.toggle("completed");
+                    if (taskItem.classList.contains("completed")) {
+                        const endTimestamp = taskItem.querySelector(".end-timestamp");
+                        const duration = taskItem.querySelector(".duration");
+
+                        // Update end timestamp and duration
+                        const startDate = new Date(taskItem.querySelector(".start-timestamp").textContent);
+                        const endDate = new Date();
+                        const timeDiff = endDate - startDate;
+                        const hours = Math.floor(timeDiff / (1000 * 60 * 60));
+                        const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                        const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+                        endTimestamp.textContent = 'End:' + endDate.toLocaleString();
+                        duration.textContent = 'Duration:' + `${hours}h ${minutes}m ${seconds}s`;
+
+                        // Show end timestamp and duration
+                        endTimestamp.style.display = "inline-block";
+                        duration.style.display = "inline-block";
+                    } else {
+                        // Hide end timestamp and duration if task is marked incomplete
+                        taskItem.querySelector(".end-timestamp").style.display = "none";
+                        taskItem.querySelector(".duration").style.display = "none";
+                    }
                 });
 
                 const deleteBtn = taskItem.querySelector(".deleteBtn");

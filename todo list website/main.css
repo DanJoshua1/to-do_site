@@ -57,44 +57,4 @@ body {
     opacity: 0.5;
   }
   
-  /* Add this CSS to your existing styles */
-
-.task-list {
-  list-style-type: none;
-  padding: 0;
-}
-
-.task-item {
-  background-color: #fff;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.task-actions button {
-  background-color: #dc3545;
-  color: #fff;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 3px;
-}
-
-.task-actions button:hover {
-  background-color: #c82333;
-}
-
-/* Centering and organizing the task list */
-.container {
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 0 20px;
-  text-align: center; /* Centering the content */
-}
-
-.container h2 {
-  margin-top: 50px; /* Adjusted margin */
-}
+  
